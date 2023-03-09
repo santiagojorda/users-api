@@ -1,8 +1,12 @@
 const express = require('express')
 const app = express()
+const bodyParser = require('body-parser')
 
 require('./config/env_vars_init')
 const {PORT, HOST} = process.env
+
+app.use(bodyParser.json());
+
 
 require('./config/db_connection')
 
