@@ -12,6 +12,12 @@ const UserSchema = new Schema({
     password: {
         type: String,
         require: true
+    },
+
+    email: {
+        type: String,
+        lowercase: true,
+        require: true
     }
 
 })
