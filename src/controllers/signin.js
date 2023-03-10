@@ -2,13 +2,7 @@ const User = require('../models/user')
 
 const signinCtrl = (req, res) => {
 
-    const {username, password, email} = req.body
-
-    const newUser = new User({
-        username: username,
-        password: password,
-        email: email
-    })
+    const newUser = req.user
 
     newUser
         .save()
