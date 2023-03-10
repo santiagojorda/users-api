@@ -1,12 +1,36 @@
+const User = require('../models/user')
 
-const signin = (req, res) => {
+
+const signinCtrl = (req, res) => {
 
     const {username, password, email} = req.body
-    console.log('username trying to be part: ' + username)
-    if(!username || !password || !email)
-        res.status(400).json({error: 'username, password and email required'})
-    else 
-        res.status(201).json({username: username})
+
+    const newUser = new User({
+        username: username,
+        password: password,
+        email: email
+    })
+
+    newUser
+        .save()
+        .then((err, savedUser) => {
+            res.status(201).json(savedUser)
+        })
+        .catch((err) => console.error(err))
+
+    // newUser.save((err) => {
+    //     if(err){
+    //         console.log('there was an saving user error')
+    //         console.log(err)
+    //         res.status(401).json({message: err})
+    //     }
+    //     else {
+    //         console.log('user created successfully')
+    //     }
+        
+    // })
+    // res.status(201).json({username: username})
+    
 }   
 
-module.exports = signin
+module.exports = signinCtrl

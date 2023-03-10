@@ -1,8 +1,13 @@
 const express = require('express')
 const router = express.Router()
+const User = require('../models/user')
 
-router.post("/signin", require('../controllers/signin'))
-// router.get("/login", require('../controllers/login'))
-// router.get("/logout", require('../controllers/logout'))
+
+const signinCtrl = require('../controllers/signin')
+const signinMiddleware = require('../middlewares/signin')
+router.post("/signin", signinMiddleware, signinCtrl)
+
+router.post("/login", require('../controllers/login'))
+// router.post("/logout", require('../controllers/logout'))
 
 module.exports = router 
