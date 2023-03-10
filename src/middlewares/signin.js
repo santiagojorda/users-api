@@ -12,7 +12,6 @@ const userFieldsAreCorrect = (user) => {
 const thisUserAlredyExist = async (user) => {
     const userFinded = await User
         .findOne({username: user.username})
-        .then((userFinded) => userFinded)
         
     if(!userFinded)
         return false

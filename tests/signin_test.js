@@ -7,36 +7,36 @@ const expect = chai.expect
 
 chai.use(chaiHttp)
 
+const usersTest = [{
+    username: 'userTest01',
+    password: 'userTest01',
+    email: 'userTest01@gmail.com'
+  },
+  {
+    username: 'userTest02',
+    password: 'userTest02',
+    email: 'userTest02@gmail.com'
+  }
+]
+
+const cleanDBTestingUsers = async () => {
+    await User.deleteMany({ $or: [
+      {username: usersTest[0].username},
+      {username: usersTest[1].username}
+    ]})
+}
+
 describe('POST - SIGNIN - /usr/signin', () => {
 
-    const userTest01 = {
-      username: 'userTest01',
-      password: 'userTest01',
-      email: 'userTest01@gmail.com'
-    }
-
-    const userTest02 = {
-      username: 'userTest02',
-      password: 'userTest02',
-      email: 'userTest02@gmail.com'
-    }
-
-    before( (done) => {
-      User.deleteMany({ $or: [
-        {username: userTest01.username},
-        {username: userTest02.username}
-      ]})
-      .then( () => {
-        new User(userTest02).save()
-        .then( () => done())
-      })
+    before( async () => {
+      await cleanDBTestingUsers()
+      await new User(usersTest[1]).save()
     })
   
     it('usuario creado con exito', (done) => {
-
       chai.request(app)
         .post('/usr/signin')
-        .send(userTest01)
+        .send(usersTest[0])
         .end((err, res) => {
           expect(res).to.have.status(201);
           done();
@@ -59,19 +59,15 @@ describe('POST - SIGNIN - /usr/signin', () => {
 
       chai.request(app)
         .post('/usr/signin')
-        .send(userTest02)
+        .send(usersTest[1])
         .end( (err, res) => {
           expect(res).to.have.status(400)
           done()
         })
     })
 
-    after( (done) => {
-      User.deleteMany({ $or: [
-          {username: userTest01.username},
-          {username: userTest02.username}
-        ]})
-        .then( () => done())
+    after( async () => {
+      await cleanDBTestingUsers()
     })
 
   });
