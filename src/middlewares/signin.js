@@ -23,11 +23,11 @@ const signinMiddleware = async (req, res, next) => {
 
     const {username, password, email} = req.body
 
-    const newUser = {
+    const newUser = new User({
         username: username,
         password: password,
         email: email
-    }
+    })
 
     if(!userRequiredFieldsAreCompleted(newUser))
         res.status(400).json({error: 'username, password and email are required'})
@@ -35,8 +35,10 @@ const signinMiddleware = async (req, res, next) => {
         res.status(400).json({error: 'username, password or email has an incorrect format'})
     else if(await thisUserAlredyExist(newUser))
         res.status(400).json({error: 'this user already exist'})
-    else
+    else{
+        req.user = newUser
         next()
+    }
     
 }
 
