@@ -1,7 +1,6 @@
 const chai = require('chai')
 const chaiHttp = require('chai-http')
 const app = require('../src/app')
-const user = require('../src/models/user')
 const User = require('../src/models/user')
 const expect = chai.expect
 
@@ -38,6 +37,7 @@ describe('POST - SIGNIN - /usr/signin', () => {
         .post('/usr/signin')
         .send(usersTest[0])
         .end((err, res) => {
+          if(err) console.log(err)
           expect(res).to.have.status(201);
           done();
         });
@@ -50,6 +50,7 @@ describe('POST - SIGNIN - /usr/signin', () => {
           password: 'testpassword'
         })
         .end((err, res) => {
+          if(err) console.log(err)
           expect(res).to.have.status(400);
           done();
         });
@@ -61,6 +62,7 @@ describe('POST - SIGNIN - /usr/signin', () => {
         .post('/usr/signin')
         .send(usersTest[1])
         .end( (err, res) => {
+          if(err) console.log(err)
           expect(res).to.have.status(400)
           done()
         })
