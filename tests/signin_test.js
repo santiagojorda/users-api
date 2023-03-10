@@ -27,8 +27,7 @@ describe('POST - SIGNIN - /usr/signin', () => {
         {username: userTest02.username}
       ]})
       .then( () => {
-        new User(userTest02)
-        .save()
+        new User(userTest02).save()
         .then( () => done())
       })
     })
