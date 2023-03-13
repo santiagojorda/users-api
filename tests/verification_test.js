@@ -14,7 +14,7 @@ describe('GET - VERIFICATION - /usr/verify', () =>{
     const userVerify01 = {
         username: 'userVerifyTest01',
         password: 'userVerifyTest01',
-        email: 'userVerifyTest01@gmail.com',
+        email: 'userverifytest01@gmail.com',
         verificationToken: 'tokenUserVerifyTest01',
         isVerificated: false
     }

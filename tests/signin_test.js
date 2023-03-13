@@ -10,12 +10,12 @@ chai.use(chaiHttp)
 const usersTest = [{
     username: 'userTest01',
     password: 'userTest01',
-    email: 'userTest01@gmail.com'
+    email: 'usertest01@gmail.com'
   },
   {
     username: 'userTest02',
     password: 'userTest02',
-    email: 'userTest02@gmail.com'
+    email: 'usertest02@gmail.com'
   }
 ]
 

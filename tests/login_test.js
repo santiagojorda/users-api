@@ -19,7 +19,7 @@ describe('POST - LOGIN - /usr/login', () => {
     const userTest01 = {
         username: 'userLoginTest01',
         password: 'userLoginTest01',
-        email: 'userLoginTest01@gmail.com',
+        email: 'userlogintest01@gmail.com',
         isVerificated: true
     }
 
@@ -27,14 +27,14 @@ describe('POST - LOGIN - /usr/login', () => {
     const userTest02 = {
         username: 'userLoginTest02',
         password: 'userLoginTest02',
-        email: 'userLoginTest02@gmail.com'
+        email: 'userlogintest02@gmail.com'
     }
 
     // user not verificated
     const userTest03 = {
         username: 'userLoginTest03',
         password: 'userLoginTest03',
-        email: 'userLoginTest03@gmail.com',
+        email: 'userlogintest03@gmail.com',
         isVerificated: false
     }
 
