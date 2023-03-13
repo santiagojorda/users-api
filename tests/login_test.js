@@ -27,8 +27,7 @@ describe('POST - LOGIN - /usr/login', () => {
     const userTest02 = {
         username: 'userLoginTest02',
         password: 'userLoginTest02',
-        email: 'userLoginTest02@gmail.com',
-        isVerificated: false
+        email: 'userLoginTest02@gmail.com'
     }
 
     // user not verificated
@@ -103,11 +102,11 @@ describe('POST - LOGIN - /usr/login', () => {
             })
     })
 
-    after( (done) => {
-        User.deleteMany({ $or: [
+    after( async () => {
+        await User.deleteMany({ $or: [
             {username: userTest01.username},
-            {username: userTest02.username}
+            {username: userTest02.username},
+            {username: userTest03.username}
           ]})
-          .then( () => done())
       })
 })

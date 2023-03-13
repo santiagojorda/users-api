@@ -1,4 +1,5 @@
-const chai = require('chai')
+
+ const chai = require('chai')
 const chaiHttp = require('chai-http')
 const app = require('../src/app')
 const expect = chai.expect
@@ -19,16 +20,14 @@ describe('GET - VERIFICATION - /usr/verify', () =>{
     }
 
     before( async () => {
-        await User.deleteMany({ $or: [
-            {username: userVerify01.username},
-        ]})
+        await User.deleteOne({username: userVerify01.username})
         await new User(userVerify01).save()
     })
 
-    it( 'usuario no verificado, se verifica correctamente' ,(done) => {
+    it( 'usuario no verificado, se verifica correctamente', (done) => {
         const user = userVerify01
         chai.request(app)
-            .get(`/usr/verify?userEmail=${user.email}&token=${user.verificationToken}`)
+            .get(`/usr/verify?userEmail=${user.email}&verificationToken=${user.verificationToken}`)
             .end( (err, res) => {
                 if(err)
                     console.log(err)
@@ -38,4 +37,7 @@ describe('GET - VERIFICATION - /usr/verify', () =>{
             })
     })
 
+    // after(async () => {
+    //     await User.deleteOne({username: userVerify01.username})
+    // })
 })
