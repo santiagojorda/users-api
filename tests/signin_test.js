@@ -1,8 +1,9 @@
 const chai = require('chai')
 const chaiHttp = require('chai-http')
 const app = require('../src/app')
-const User = require('../src/models/user')
 const expect = chai.expect
+
+const User = require('../src/models/user')
 
 chai.use(chaiHttp)
 
@@ -57,7 +58,6 @@ describe('POST - SIGNIN - /usr/signin', () => {
     });
 
     it('devuelve error si se registra usuario que ya existe', (done) => {
-
       chai.request(app)
         .post('/usr/signin')
         .send(usersTest[1])

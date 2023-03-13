@@ -7,9 +7,7 @@ const {PORT, HOST} = process.env
 
 app.use(bodyParser.json());
 
-
 require('./config/db_connection')
-
 app.use('/usr/', require('./routes/root'))
 
 app.listen(PORT, HOST, (req, res) => {
