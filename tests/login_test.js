@@ -7,39 +7,57 @@ const User = require('../src/models/user')
 
 chai.use(chaiHttp)
 
+const HTTP_SUCCESSFULL = 200
+const HTTP_BAD_REQUEST = 400
+const HTTP_UNAUTHORIZED = 401 
+const HTTP_ACCESS_FORBIDDEN = 403 
+
+
 describe('POST - LOGIN - /usr/login', () => {
 
+    // user register
     const userTest01 = {
         username: 'userLoginTest01',
         password: 'userLoginTest01',
-        email: 'userLoginTest01@gmail.com'
+        email: 'userLoginTest01@gmail.com',
+        isVerificated: true
     }
 
+    // user not register
     const userTest02 = {
         username: 'userLoginTest02',
         password: 'userLoginTest02',
-        email: 'userLoginTest02@gmail.com'
+        email: 'userLoginTest02@gmail.com',
+        isVerificated: false
     }
 
-    before( (done) => {
-        User.deleteMany({ $or: [
+    // user not verificated
+    const userTest03 = {
+        username: 'userLoginTest03',
+        password: 'userLoginTest03',
+        email: 'userLoginTest03@gmail.com',
+        isVerificated: false
+    }
+
+    before( async () => {
+        await User.deleteMany({ $or: [
             {username: userTest01.username},
-            {username: userTest02.username}
-          ]})
-        .then( () => {
-            new User(userTest01).save()
-                .then( () => done())
-        })
+            {username: userTest02.username},
+            {username: userTest03.username}
+        ]})
+        await new User(userTest01).save()
+        await new User(userTest03).save()
     })
 
-    it('usuario existente ingresa con exito', (done) => {
+    it('usuario existente y validado ingresa con exito', (done) => {
         chai.request(app)
             .post('/usr/login')
             .send(userTest01)
             .end((err, res) => {
                 if(err)
                     console.log(err)
-                expect(res).to.have.status(200)
+                expect(res.body.message).to.be.equals(`${userTest01.username} has successfully logged in`)
+                expect(res).to.have.status(HTTP_SUCCESSFULL)
                 done()
             })
     })
@@ -51,20 +69,36 @@ describe('POST - LOGIN - /usr/login', () => {
             .end((err, res) => {
                 if(err)
                     console.log(err)
-                expect(res).to.have.status(401)
+                expect(res.body.error).to.be.equals(`username or password are incorrect`)
+                expect(res).to.have.status(HTTP_UNAUTHORIZED)
                 done()
             })
     })
 
     it('devuelve error si se intenta ingresar con campos incompletos', (done) => {
-        userTest02.password = null
+        const user = userTest02
+        user.password = null
         chai.request(app)
             .post('/usr/login')
-            .send(userTest02)
+            .send(user)
             .end((err, res) => {
                 if(err)
                     console.log(err)
-                expect(res).to.have.status(400)
+                expect(res.body.error).to.be.equals(`username and password are required`)
+                expect(res).to.have.status(HTTP_BAD_REQUEST)
+                done()
+            })
+    })
+
+    it('devuelve error si se intenta ingresar un usuario no esta validado', (done) => {
+        chai.request(app)
+            .post('/usr/login')
+            .send(userTest03)
+            .end((err, res) => {
+                if(err)
+                    console.log(err)
+                expect(res.body.error).to.be.equals(`the user has not been validated`)
+                expect(res).to.have.status(HTTP_ACCESS_FORBIDDEN)
                 done()
             })
     })

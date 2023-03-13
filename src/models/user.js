@@ -20,6 +20,17 @@ const UserSchema = new Schema({
         require: true,
         unique: true,
         lowercase: true
+    },
+
+    isVerificated: {
+        type: Boolean,
+        require: true,
+        default: false
+    },
+    
+    verificationToken: {
+        type: String,
+        default: 'thisIsAToken'
     }
 
 })
