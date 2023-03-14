@@ -7,22 +7,13 @@ const User = require('../src/models/user')
 
 chai.use(chaiHttp)
 
-const usersTest = [{
-    username: 'userTest01',
-    password: 'userTest01',
-    email: 'usertest01@gmail.com'
-  },
-  {
-    username: 'userTest02',
-    password: 'userTest02',
-    email: 'usertest02@gmail.com'
-  }
-]
+const HTTP = require('../src/utils/http_codes')
+const {userTest01, userTest02} = require('./signin_users_mock')
 
 const cleanDBTestingUsers = async () => {
     await User.deleteMany({ $or: [
-      {username: usersTest[0].username},
-      {username: usersTest[1].username}
+      {username: userTest01.username},
+      {username: userTest02.username}
     ]})
 }
 
@@ -30,16 +21,16 @@ describe('POST - SIGNIN - /usr/signin', () => {
 
     before( async () => {
       await cleanDBTestingUsers()
-      await new User(usersTest[1]).save()
+      await new User(userTest02).save()
     })
   
     it('usuario creado con exito', (done) => {
       chai.request(app)
         .post('/usr/signin')
-        .send(usersTest[0])
+        .send(userTest01)
         .end((err, res) => {
           if(err) console.log(err)
-          expect(res).to.have.status(201);
+          expect(res).to.have.status(HTTP.REQUEST.CREATED);
           done();
         });
     });
@@ -52,7 +43,7 @@ describe('POST - SIGNIN - /usr/signin', () => {
         })
         .end((err, res) => {
           if(err) console.log(err)
-          expect(res).to.have.status(400);
+          expect(res).to.have.status(HTTP.SERVER.BAD_REQUEST);
           done();
         });
     });
@@ -60,10 +51,10 @@ describe('POST - SIGNIN - /usr/signin', () => {
     it('devuelve error si se registra usuario que ya existe', (done) => {
       chai.request(app)
         .post('/usr/signin')
-        .send(usersTest[1])
+        .send(userTest02)
         .end( (err, res) => {
           if(err) console.log(err)
-          expect(res).to.have.status(400)
+          expect(res).to.have.status(HTTP.SERVER.BAD_REQUEST)
           done()
         })
     })

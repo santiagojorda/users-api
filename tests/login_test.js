@@ -5,39 +5,12 @@ const expect = chai.expect
 
 const User = require('../src/models/user')
 
+const {userTest01, userTest02, userTest03} = require('./login_users_mock')
+const HTTP = require('../src/utils/http_codes')
+
 chai.use(chaiHttp)
 
-const HTTP_SUCCESSFULL = 200
-const HTTP_BAD_REQUEST = 400
-const HTTP_UNAUTHORIZED = 401 
-const HTTP_ACCESS_FORBIDDEN = 403 
-
-
 describe('POST - LOGIN - /usr/login', () => {
-
-    // user register
-    const userTest01 = {
-        username: 'userLoginTest01',
-        password: 'userLoginTest01',
-        email: 'userlogintest01@gmail.com',
-        isVerificated: true
-    }
-
-    // user not register
-    const userTest02 = {
-        username: 'userLoginTest02',
-        password: 'userLoginTest02',
-        email: 'userlogintest02@gmail.com'
-    }
-
-    // user not verificated
-    const userTest03 = {
-        username: 'userLoginTest03',
-        password: 'userLoginTest03',
-        email: 'userlogintest03@gmail.com',
-        isVerificated: false
-    }
-
     before( async () => {
         await User.deleteMany({ $or: [
             {username: userTest01.username},
@@ -56,7 +29,7 @@ describe('POST - LOGIN - /usr/login', () => {
                 if(err)
                     console.log(err)
                 expect(res.body.message).to.be.equals(`${userTest01.username} has successfully logged in`)
-                expect(res).to.have.status(HTTP_SUCCESSFULL)
+                expect(res).to.have.status(HTTP.REQUEST.SUCCESFFULL)
                 done()
             })
     })
@@ -69,7 +42,7 @@ describe('POST - LOGIN - /usr/login', () => {
                 if(err)
                     console.log(err)
                 expect(res.body.error).to.be.equals(`username or password are incorrect`)
-                expect(res).to.have.status(HTTP_UNAUTHORIZED)
+                expect(res).to.have.status(HTTP.SERVER.UNAUTHORIZED)
                 done()
             })
     })
@@ -84,7 +57,7 @@ describe('POST - LOGIN - /usr/login', () => {
                 if(err)
                     console.log(err)
                 expect(res.body.error).to.be.equals(`username and password are required`)
-                expect(res).to.have.status(HTTP_BAD_REQUEST)
+                expect(res).to.have.status(HTTP.SERVER.BAD_REQUEST)
                 done()
             })
     })
@@ -97,7 +70,7 @@ describe('POST - LOGIN - /usr/login', () => {
                 if(err)
                     console.log(err)
                 expect(res.body.error).to.be.equals(`the user has not been validated`)
-                expect(res).to.have.status(HTTP_ACCESS_FORBIDDEN)
+                expect(res).to.have.status(HTTP.SERVER.ACCESS_FORBIDDEN)
                 done()
             })
     })

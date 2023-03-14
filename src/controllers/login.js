@@ -1,8 +1,5 @@
 const User = require("../models/user")
-
-const HTTP_SUCCESSFULL = 200
-const HTTP_UNAUTHORIZED = 401 
-const HTTP_ACCESS_FORBIDDEN = 403 
+const HTTP = require('../utils/http_codes')
 
 const loginCtrl = async (req, res) => {
     
@@ -18,10 +15,10 @@ const loginCtrl = async (req, res) => {
         .then((userFinded) => userFinded)
 
     if(!userFinded)
-        res.status(HTTP_UNAUTHORIZED).json({error: 'username or password are incorrect'})
+        res.status(HTTP.SERVER.UNAUTHORIZED).json({error: 'username or password are incorrect'})
     else if(!userFinded.isVerificated)
-        res.status(HTTP_ACCESS_FORBIDDEN).json({error: 'the user has not been validated'})
-    res.status(HTTP_SUCCESSFULL).json({message: `${username} has successfully logged in`})
+        res.status(HTTP.SERVER.ACCESS_FORBIDDEN).json({error: 'the user has not been validated'})
+    res.status(HTTP.REQUEST.SUCCESFFULL).json({message: `${username} has successfully logged in`})
 
 }
 
