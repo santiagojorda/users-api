@@ -30,7 +30,7 @@ describe('GET - VERIFICATION - /usr/verify', () =>{
             })
     })
 
-    // after(async () => {
-    //     await User.deleteOne({username: userVerify01.username})
-    // })
+    after(async () => {
+        await User.deleteOne({username: userTest01.username})
+    })
 })
