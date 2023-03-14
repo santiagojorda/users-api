@@ -25,7 +25,7 @@ describe('GET - VERIFICATION - /usr/verify', () =>{
                 if(err)
                     console.log(err)
                 expect(res.body.message).to.be.equals(`${user.email} has been verificated successfully`)
-                expect(res).to.have.status(HTTP.REQUEST.SUCCESSFULL)
+                expect(res).to.have.status(HTTP.RESPONSE.SUCCESSFULL)
                 done()
             })
     })

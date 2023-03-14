@@ -5,7 +5,7 @@ const HTTP = {
         ACCESS_FORBIDDEN: 403
     },
 
-    REQUEST: {
+    RESPONSE: {
         SUCCESSFULL: 200,
         CREATED: 201
     }

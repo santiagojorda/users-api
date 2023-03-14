@@ -29,7 +29,7 @@ describe('POST - SIGNIN - /usr/signin', () => {
         .send(userTest01)
         .end((err, res) => {
           if(err) console.log(err)
-          expect(res).to.have.status(HTTP.REQUEST.CREATED);
+          expect(res).to.have.status(HTTP.RESPONSE.CREATED);
           done();
         });
     });

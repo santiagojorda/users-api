@@ -17,8 +17,8 @@ const verification = async (req, res) => {
     if(!userFinded)
         res.status(HTTP.SERVER.ACCESS_FORBIDDEN).json({error: `${userFinded.email} is not registered`})
     if(userFinded.isVerificated)
-        res.status(HTTP.REQUEST.SUCCESSFULL).json({message: `${userFinded.email} is already registered`})
+        res.status(HTTP.RESPONSE.SUCCESSFULL).json({message: `${userFinded.email} is already registered`})
     await verifyUser(userFinded, verificationToken)
-    res.status(HTTP.REQUEST.SUCCESSFULL).json({message: `${userFinded.email} has been verificated successfully`})
+    res.status(HTTP.RESPONSE.SUCCESSFULL).json({message: `${userFinded.email} has been verificated successfully`})
 }
 module.exports = verification

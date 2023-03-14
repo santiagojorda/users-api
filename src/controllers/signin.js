@@ -7,7 +7,7 @@ const signinCtrl = (req, res) => {
     newUser
         .save()
         .then((err, savedUser) => {
-            res.status(HTTP.REQUEST.CREATED).json(savedUser)
+            res.status(HTTP.RESPONSE.CREATED).json(savedUser)
         })
         .catch((err) => console.error(err))
     

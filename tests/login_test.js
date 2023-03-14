@@ -28,7 +28,7 @@ describe('POST - LOGIN - /usr/login', () => {
                 if(err)
                     console.log(err)
                 expect(res.body.message).to.be.equals(`${userTest01.username} has successfully logged in`)
-                expect(res).to.have.status(HTTP.REQUEST.SUCCESSFULL)
+                expect(res).to.have.status(HTTP.RESPONSE.SUCCESSFULL)
                 done()
             })
     })

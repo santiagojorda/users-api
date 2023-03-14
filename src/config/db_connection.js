@@ -13,7 +13,7 @@ const DB_USERS = DB_HOST + '/users'
 const connectDB = () => {
     mongoose.connect("mongodb://"+DB_USERS)
     .then( () => console.log(`MongoDb conectado correctamente a: ${DB_HOST}`))
-    .catch( (err) => console.log(`MongoDb no se conecto correctamente:  ` + err))
+    .catch( (err) => console.log(`MongoDb no se conecto correctamente: ${err}`))
 }
 
 connectDB()
