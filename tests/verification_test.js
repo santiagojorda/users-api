@@ -7,24 +7,18 @@ const HTTP = require('../src/utils/http_codes')
 
 chai.use(chaiHttp)
 
+const {userTest01} = require('./verification_users_mock')
+
 
 describe('GET - VERIFICATION - /usr/verify', () =>{
 
-    const userVerify01 = {
-        username: 'userVerifyTest01',
-        password: 'userVerifyTest01',
-        email: 'userverifytest01@gmail.com',
-        verificationToken: 'tokenUserVerifyTest01',
-        isVerificated: false
-    }
-
     before( async () => {
-        await User.deleteOne({username: userVerify01.username})
-        await new User(userVerify01).save()
+        await User.deleteOne({username: userTest01.username})
+        await new User(userTest01).save()
     })
 
     it( 'usuario no verificado, se verifica correctamente', (done) => {
-        const user = userVerify01
+        const user = userTest01
         chai.request(app)
             .get(`/usr/verify?userEmail=${user.email}&verificationToken=${user.verificationToken}`)
             .end( (err, res) => {
