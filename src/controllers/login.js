@@ -18,7 +18,7 @@ const loginCtrl = async (req, res) => {
         res.status(HTTP.SERVER.UNAUTHORIZED).json({error: 'username or password are incorrect'})
     else if(!userFinded.isVerificated)
         res.status(HTTP.SERVER.ACCESS_FORBIDDEN).json({error: 'the user has not been validated'})
-    res.status(HTTP.REQUEST.SUCCESFFULL).json({message: `${username} has successfully logged in`})
+    res.status(HTTP.REQUEST.SUCCESSFULL).json({message: `${username} has successfully logged in`})
 
 }
 

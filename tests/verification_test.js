@@ -1,13 +1,12 @@
-
- const chai = require('chai')
+const chai = require('chai')
 const chaiHttp = require('chai-http')
 const app = require('../src/app')
-const expect = chai.expect
-
 const User = require('../src/models/user')
+const expect = chai.expect
+const HTTP = require('../src/utils/http_codes')
+
 chai.use(chaiHttp)
 
-const HTTP_SUCCESSFULL = 200
 
 describe('GET - VERIFICATION - /usr/verify', () =>{
 
@@ -32,7 +31,7 @@ describe('GET - VERIFICATION - /usr/verify', () =>{
                 if(err)
                     console.log(err)
                 expect(res.body.message).to.be.equals(`${user.email} has been verificated successfully`)
-                expect(res).to.have.status(HTTP_SUCCESSFULL)
+                expect(res).to.have.status(HTTP.REQUEST.SUCCESSFULL)
                 done()
             })
     })

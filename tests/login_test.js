@@ -2,11 +2,10 @@ const chai = require('chai')
 const chaiHttp = require('chai-http')
 const app = require('../src/app')
 const expect = chai.expect
-
+const HTTP = require('../src/utils/http_codes')
 const User = require('../src/models/user')
 
 const {userTest01, userTest02, userTest03} = require('./login_users_mock')
-const HTTP = require('../src/utils/http_codes')
 
 chai.use(chaiHttp)
 
@@ -29,7 +28,7 @@ describe('POST - LOGIN - /usr/login', () => {
                 if(err)
                     console.log(err)
                 expect(res.body.message).to.be.equals(`${userTest01.username} has successfully logged in`)
-                expect(res).to.have.status(HTTP.REQUEST.SUCCESFFULL)
+                expect(res).to.have.status(HTTP.REQUEST.SUCCESSFULL)
                 done()
             })
     })

@@ -19,6 +19,6 @@ const verification = async (req, res) => {
     if(userFinded.isVerificated)
         res.status(HTTP.REQUEST.SUCCESSFULL).json({message: `${userFinded.email} is already registered`})
     await verifyUser(userFinded, verificationToken)
-    res.status(HTTP.REQUEST.SUCCESFFULL).json({message: `${userFinded.email} has been verificated successfully`})
+    res.status(HTTP.REQUEST.SUCCESSFULL).json({message: `${userFinded.email} has been verificated successfully`})
 }
 module.exports = verification

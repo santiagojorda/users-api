@@ -1,14 +1,13 @@
 const chai = require('chai')
 const chaiHttp = require('chai-http')
 const app = require('../src/app')
+const HTTP = require('../src/utils/http_codes')
+const User = require('../src/models/user')
 const expect = chai.expect
 
-const User = require('../src/models/user')
+const {userTest01, userTest02} = require('./signin_users_mock')
 
 chai.use(chaiHttp)
-
-const HTTP = require('../src/utils/http_codes')
-const {userTest01, userTest02} = require('./signin_users_mock')
 
 const cleanDBTestingUsers = async () => {
     await User.deleteMany({ $or: [

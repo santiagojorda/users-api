@@ -6,7 +6,7 @@ const HTTP = {
     },
 
     REQUEST: {
-        SUCCESFFULL: 200,
+        SUCCESSFULL: 200,
         CREATED: 201
     }
 }
